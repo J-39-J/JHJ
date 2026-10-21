@@ -1,17 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>JHJ个人练习</title>
+    <meta charset="utf-8">
+    <title>HJJ练习作品</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        /* ====== 全屏动画遮罩层 ====== */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color:#FFC0CB; /* 纯黑背景 */
+            z-index: 9999; /* 保证它在最上层 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeOut 2s ease-in-out 2s forwards;
+        }
+
+        /* 当动画结束后，把它隐藏掉，防止挡住鼠标点击 */
+        .hidden {
+            display: none !important;
+        }
+
+        .my-logo {
+            width: 500px; /* 全屏时动画可以大一点 */
+        }
+
+        .my-logo svg {
+            overflow: visible;
+        }
+
+        .line-animation {
+            stroke-dasharray: 100 100;
+            stroke-dashoffset: 100;
+            /* 只画一次，画完后保持最后的状态 */
+            animation: drawLine 2s ease-in-out forwards;
+        }
+
+        @keyframes drawLine {
+            0% { stroke-dashoffset: 100; }
+            100% { stroke-dashoffset: 0; }
+        }
+
+        /* 淡出消失动画 */
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+        /* ====== 动画样式结束 ====== */
+    </style>
 </head>
-  <body>
+<body>
+
+    <!-- ====== 全屏开场动画 ====== -->
+    <div id="loading-screen">
+        <div class="my-logo">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.88 76.56">
+                <path
+                    class="line-animation"
+                    d="M37.94.5C16.44.5.5,17,.5,40c0,17.5,16.69,35.88,38.81,35.88,20.63,0,34.38-15.38,56.88-37.38C116.44,18.7,131.69.75,153.94.75c21,0,37.44,16.5,37.44,37.75,0,19-16.69,37.56-38.81,37.56C135,76.06,118.71,60,96.51,38.56,74.94,17.75,58.69.5,37.94.5Z"
+                    fill="none"
+                    stroke="#E0FFFF"
+                    stroke-width="10"
+                    pathLength="100"
+                />
+            </svg>
+        </div>
+    </div>
+
+    <!-- ====== 你的原版网页内容 ====== -->
+    <!-- 粉色头部 -->
     <div style="
-    background-color:pink;
+    background-color:#FFC0CB;
     text-align:center;
     padding:80px">
-      <img src="https://www.midorg.com/midlogo.png" alt="一张图片，仅作学习用" width="100px"height="100px">
+        <img src="Nikki.png" alt="苏暖暖" width="100px" height="100px">
     </div>
-     <div style="
+
+    <!-- 灰色内容区 -->
+    <div style="
      max-width:700px;
      text-align:center;
      background-color:#FDF5E6;
@@ -19,19 +92,33 @@
      padding:15px;
      line-height:1.7;
      color:#66CDAA">
-       <p>一个练习作品</p>
-       <p>试一下</p>
-       <p>有点难看</p>
-       <p>是正常的</p>
-       <p>。。</p>
+       <p>出场动画参考了</p>
+       <a href="https://dark.netflix.io/en/family-tree">德剧：《暗黑》</a>
+       <p>反正我觉得挺好看的</p>
+       <p>故事是关于时间时空的</p>
+       <p>不过看的时候我一直在思考祖母悖论</p>
+       <p>没看完，德剧太难啃了</p>
+       <p>人物多到我对着关系树都没看明白</p>
      </div>
+
+    <!-- 底部 -->
     <div style="
-    background-color:#FFB6C1;
+    background-color:#FFC0CB;
     text-align:center;
     padding:80px;
     font-size:12px">
-    <p>个人练习作品</p>
-   <a href="https://www.runoob.com/html/html-tutorial.html">学习链接</a>
+        <p>个人练习作品</p>
+        <a href="https://www.runoob.com/html/html-tutorial.html">学习链接</a>
+      <br><br>
+        <a href="可乐鸡翅.pdf">略拼小力的大作业</a>
     </div>
+
+    <!-- 用一小段 JavaScript 在动画淡出后，彻底把它从页面上删掉 -->
+    <script>
+        setTimeout(function() {
+            document.getElementById('loading-screen').classList.add('hidden');
+        }, 2000);
+    </script>
+
 </body>
 </html>
