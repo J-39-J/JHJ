@@ -120,32 +120,44 @@
         }, 2000);
     </script>
   <!-- 音乐文件保持不变 -->
-<audio id="bg-music" loop>
+<!-- 关键点1：加上了 autoplay 和 muted（静音自动播放） -->
+<audio id="bg-music" loop autoplay muted>
     <source src="Lion.wav" type="audio/wav">
 </audio>
 
-<!-- 注意：这里的 style 里加了 display: none; 也就是一开始先藏起来 -->
 <button id="music-btn" onclick="toggleMusic()" style="display: none; position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; border-radius: 20px; background: #FFB6C1; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 10000;">
-    🎵 播放音乐
+    🎵
 </button>
 
 <script>
-    // 播放/暂停控制
+    var audio = document.getElementById('bg-music');
+    var btn = document.getElementById('music-btn');
+    var hasInteracted = false; // 记录用户有没有点过页面
+
+    // 控制按钮的播放/暂停
     function toggleMusic() {
-        var audio = document.getElementById('bg-music');
-        var btn = document.getElementById('music-btn');
         if (audio.paused) {
             audio.play();
-            btn.innerHTML = '⏸️ 暂停音乐';
+            btn.innerHTML = '⏸️';
         } else {
             audio.pause();
-            btn.innerHTML = '🎵 播放音乐';
+            btn.innerHTML = '🎵';
         }
     }
 
-    // 开场动画（假设你动画是 3 秒后消失），我们在 3.5 秒（3500毫秒）后把按钮显示出来
+    // 监控整个页面的点击事件（只要用户随便点一下网页任何地方）
+    document.addEventListener('click', function() {
+        if (!hasInteracted) {
+            audio.muted = false; // 解除静音
+            audio.play();        // 开始出声播放
+            btn.innerHTML = '⏸️'; // 右下角的按钮状态也跟着变
+            hasInteracted = true;
+        }
+    });
+
+    // 你的动画消失后显示按钮
     setTimeout(function() {
-        document.getElementById('music-btn').style.display = 'block';
+        btn.style.display = 'block';
     }, 3500); 
 </script>
 
