@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>旋转的星云</title>
+<style>
+  /* 整个页面变成深邃的宇宙底色 */
+  body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at center, #0b0b2a 0%, #000000 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* 隐藏滚动条 */
+  }
+
+  /* 星云容器，用来控制旋转 */
+  .nebula-container {
+    width: 400px;
+    height: 400px;
+    position: relative;
+    /* 让整个容器一直无限旋转，转一圈需要 20 秒 */
+    animation: spin 20s linear infinite;
+  }
+
+  /* 核心星云（一团发光的雾气） */
+  .nebula-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150px;
+    height: 150px;
+    margin-top: -75px;
+    margin-left: -75px;
+    background: radial-gradient(circle, rgba(255,105,180,0.8) 0%, rgba(138,43,226,0.6) 40%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(20px); /* 边缘模糊，产生雾气感 */
+    box-shadow: 0 0 60px rgba(138,43,226,0.8);
+  }
+
+  /* 环绕的星云光环（像星系的旋臂） */
+  .nebula-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    margin-top: -150px;
+    margin-left: -150px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, transparent, rgba(0, 255, 255, 0.4), transparent 40%, rgba(255, 0, 255, 0.4), transparent);
+    filter: blur(10px); /* 边缘模糊 */
+    animation: spin-reverse 15s linear infinite; /* 光环反向自转，更迷幻 */
+  }
+
+  /* 闪烁的星星 */
+  .stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image:
+      radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(1px 1px at 200px 180px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 250px 50px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(1px 1px at 300px 250px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 350px 100px, #ffffff, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 400px 400px;
+    animation: twinkle 3s ease-in-out infinite alternate; /* 星星闪烁 */
+  }
+
+  /* 定义旋转动画（正向） */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* 定义旋转动画（反向，让光环和核心错开） */
+  @keyframes spin-reverse {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+  }
+
+  /* 定义星星闪烁动画 */
+  @keyframes twinkle {
+    0% { opacity: 0.3; }
+    100% { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- 星云组件 -->
+  <div class="nebula-container">
+    <div class="stars"></div>
+    <div class="nebula-core"></div>
+    <div class="nebula-ring"></div>
+  </div>
+
+</body>
+</html>
