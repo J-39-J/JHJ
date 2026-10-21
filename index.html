@@ -121,12 +121,13 @@
     </script>
     <!-- 网页背景音乐，文件名已改为 lion.wav -->
 <audio loop id="bg-music">
-    <source src="lion.wav" type="audio/wav">
+    <source src="Lion.wav" type="audio/wav">
     您的浏览器不支持音频播放。
 </audio>
 
 <!-- 悬浮在右下角的播放按钮 -->
-<button onclick="document.getElementById('bg-music').play(); this.style.display='none';" style="position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; border-radius: 20px; background: #FFB6C1; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 10000;">
+<button onclick="document.getElementById('bg-music').play();
+    this.style.display='none';" style="position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; border-radius: 20px; background: #FFB6C1; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 10000;">
     🎵 播放音乐
 </button>
 
