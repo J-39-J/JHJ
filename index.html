@@ -119,17 +119,35 @@
             document.getElementById('loading-screen').classList.add('hidden');
         }, 2000);
     </script>
-    <!-- 网页背景音乐，文件名已改为 lion.wav -->
-<audio loop id="bg-music">
+  <!-- 音乐文件保持不变 -->
+<audio id="bg-music" loop>
     <source src="Lion.wav" type="audio/wav">
-    您的浏览器不支持音频播放。
 </audio>
 
-<!-- 悬浮在右下角的播放按钮 -->
-<button onclick="document.getElementById('bg-music').play();
-    this.style.display='none';" style="position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; border-radius: 20px; background: #FFB6C1; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 10000;">
+<!-- 注意：这里的 style 里加了 display: none; 也就是一开始先藏起来 -->
+<button id="music-btn" onclick="toggleMusic()" style="display: none; position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; border-radius: 20px; background: #FFB6C1; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 10000;">
     🎵 播放音乐
 </button>
+
+<script>
+    // 播放/暂停控制
+    function toggleMusic() {
+        var audio = document.getElementById('bg-music');
+        var btn = document.getElementById('music-btn');
+        if (audio.paused) {
+            audio.play();
+            btn.innerHTML = '⏸️ 暂停音乐';
+        } else {
+            audio.pause();
+            btn.innerHTML = '🎵 播放音乐';
+        }
+    }
+
+    // 开场动画（假设你动画是 3 秒后消失），我们在 3.5 秒（3500毫秒）后把按钮显示出来
+    setTimeout(function() {
+        document.getElementById('music-btn').style.display = 'block';
+    }, 3500); 
+</script>
 
 </body>
 </html>
