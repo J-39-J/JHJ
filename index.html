@@ -4,9 +4,7 @@
     <meta charset="utf-8">
     <title>HJJ练习作品</title>
     <style>
-        body {
-            margin: 0;
-        }
+        body { margin: 0; }
 
         /* ====== 全屏动画遮罩层 ====== */
         #loading-screen {
@@ -15,31 +13,23 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color:#FFC0CB; /* 纯黑背景 */
-            z-index: 9999; /* 保证它在最上层 */
+            background-color: #FFC0CB;
+            z-index: 9999;
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: fadeOut 2s ease-in-out 2s forwards;
+            animation: fadeOut 1.5s ease-in-out 2.5s forwards; /* 2.5秒后开始淡出 */
         }
 
-        /* 当动画结束后，把它隐藏掉，防止挡住鼠标点击 */
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
 
-        .my-logo {
-            width: 500px; /* 全屏时动画可以大一点 */
-        }
+        .my-logo { width: 500px; }
 
-        .my-logo svg {
-            overflow: visible;
-        }
+        .my-logo svg { overflow: visible; }
 
         .line-animation {
             stroke-dasharray: 100 100;
             stroke-dashoffset: 100;
-            /* 只画一次，画完后保持最后的状态 */
             animation: drawLine 2s ease-in-out forwards;
         }
 
@@ -48,12 +38,10 @@
             100% { stroke-dashoffset: 0; }
         }
 
-        /* 淡出消失动画 */
         @keyframes fadeOut {
             0% { opacity: 1; }
             100% { opacity: 0; visibility: hidden; }
         }
-        /* ====== 动画样式结束 ====== */
     </style>
 </head>
 <body>
@@ -62,36 +50,19 @@
     <div id="loading-screen">
         <div class="my-logo">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.88 76.56">
-                <path
-                    class="line-animation"
+                <path class="line-animation"
                     d="M37.94.5C16.44.5.5,17,.5,40c0,17.5,16.69,35.88,38.81,35.88,20.63,0,34.38-15.38,56.88-37.38C116.44,18.7,131.69.75,153.94.75c21,0,37.44,16.5,37.44,37.75,0,19-16.69,37.56-38.81,37.56C135,76.06,118.71,60,96.51,38.56,74.94,17.75,58.69.5,37.94.5Z"
-                    fill="none"
-                    stroke="#E0FFFF"
-                    stroke-width="10"
-                    pathLength="100"
-                />
+                    fill="none" stroke="#E0FFFF" stroke-width="10" pathLength="100" />
             </svg>
         </div>
     </div>
 
-    <!-- ====== 你的原版网页内容 ====== -->
-    <!-- 粉色头部 -->
-    <div style="
-    background-color:#FFC0CB;
-    text-align:center;
-    padding:80px">
+    <!-- ====== 原版网页内容 ====== -->
+    <div style="background-color:#FFC0CB; text-align:center; padding:80px">
         <img src="Nikki.png" alt="苏暖暖" width="120px" height="100px">
     </div>
 
-    <!-- 灰色内容区 -->
-    <div style="
-     max-width:700px;
-     text-align:center;
-     background-color:#FDF5E6;
-     margin:30px auto;
-     padding:15px;
-     line-height:1.7;
-     color:#66CDAA">
+    <div style="max-width:700px; text-align:center; background-color:#FDF5E6; margin:30px auto; padding:15px; line-height:1.7; color:#66CDAA">
        <p>出场动画参考了</p>
        <a href="https://dark.netflix.io/en/family-tree">德剧：《暗黑》</a>
        <p>反正我觉得挺好看的</p>
@@ -99,67 +70,62 @@
        <p>不过看的时候我一直在思考祖母悖论</p>
        <p>没看完，德剧太难啃了</p>
        <p>人物多到我对着关系树都没看明白</p>
-     </div>
+    </div>
 
-    <!-- 底部 -->
-    <div style="
-    background-color:#FFC0CB;
-    text-align:center;
-    padding:80px;
-    font-size:12px">
+    <div style="background-color:#FFC0CB; text-align:center; padding:80px; font-size:12px">
         <p>个人练习作品</p>
         <a href="https://www.runoob.com/html/html-tutorial.html">学习链接</a>
-      <br><br>
+        <br><br>
         <a href="可乐鸡翅.pdf">略拼小力的大作业</a>
     </div>
 
-    <!-- 用一小段 JavaScript 在动画淡出后，彻底把它从页面上删掉 -->
+    <!-- ====== 音乐与交互 ====== -->
+    <audio id="bg-music" loop autoplay muted>
+        <source src="Lion.wav" type="audio/wav">
+    </audio>
+
+    <button id="music-btn" onclick="toggleMusic(event)" style="display: none; position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; border-radius: 20px; background: #FFB6C1; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 10000;">
+        🎵
+    </button>
+
     <script>
-        setTimeout(function() {
-            document.getElementById('loading-screen').classList.add('hidden');
-        }, 2000);
-    </script>
-  <!-- 音乐文件保持不变 -->
-<!-- 关键点1：加上了 autoplay 和 muted（静音自动播放） -->
-<audio id="bg-music" loop autoplay muted>
-    <source src="Lion.wav" type="audio/wav">
-</audio>
+        var audio = document.getElementById('bg-music');
+        var btn = document.getElementById('music-btn');
+        var hasInteracted = false;
 
-<button id="music-btn" onclick="toggleMusic()" style="display: none; position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; border-radius: 20px; background: #FFB6C1; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 10000;">
-    🎵
-</button>
-
-<script>
-    var audio = document.getElementById('bg-music');
-    var btn = document.getElementById('music-btn');
-    var hasInteracted = false; // 记录用户有没有点过页面
-
-    // 控制按钮的播放/暂停
-    function toggleMusic() {
-        if (audio.paused) {
-            audio.play();
-            btn.innerHTML = '⏸️';
-        } else {
-            audio.pause();
-            btn.innerHTML = '🎵';
-        }
-    }
-
-    // 监控整个页面的点击事件（只要用户随便点一下网页任何地方）
-    document.addEventListener('click', function() {
-        if (!hasInteracted) {
-            audio.muted = false; // 解除静音
-            audio.play();        // 开始出声播放
-            btn.innerHTML = '⏸️'; // 右下角的按钮状态也跟着变
+        // 单独控制按钮点击（加了 event.stopPropagation 防止冲突）
+        function toggleMusic(event) {
+            event.stopPropagation(); // 阻止事件冒泡到整个网页
+            if (audio.paused) {
+                audio.muted = false;
+                audio.play();
+                btn.innerHTML = '⏸️';
+            } else {
+                audio.pause();
+                btn.innerHTML = '🎵';
+            }
             hasInteracted = true;
         }
-    });
 
-    // 你的动画消失后显示按钮
-    setTimeout(function() {
-        btn.style.display = 'block';
-    }, 3500); 
-</script>
+        // 网页任何地方点击，都会解除静音并播放
+        document.addEventListener('click', function() {
+            if (!hasInteracted) {
+                audio.muted = false; 
+                audio.play();        
+                btn.innerHTML = '⏸️'; 
+                hasInteracted = true;
+            }
+        });
 
+        // 1. 等到 3 秒（3000毫秒）时，动画播完，让按钮出现
+        setTimeout(function() {
+            btn.style.display = 'block';
+        }, 3000); 
+
+        // 2. 等到 4.5 秒（4500毫秒）时，把黑色的全屏遮罩彻底从网页删掉
+        setTimeout(function() {
+            document.getElementById('loading-screen').classList.add('hidden');
+        }, 4500);
+    </script>
 </body>
 </html>
