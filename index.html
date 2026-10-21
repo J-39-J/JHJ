@@ -2,9 +2,14 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
+    <!-- 这一句是适应手机端的核心 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HJJ练习作品</title>
     <style>
-        body { margin: 0; }
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
 
         /* ====== 全屏动画遮罩层 ====== */
         #loading-screen {
@@ -18,7 +23,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: fadeOut 1.5s ease-in-out 2.5s forwards; /* 2.5秒后开始淡出 */
+            animation: fadeOut 1.5s ease-in-out 2.5s forwards;
         }
 
         .hidden { display: none !important; }
@@ -42,11 +47,33 @@
             0% { opacity: 1; }
             100% { opacity: 0; visibility: hidden; }
         }
+
+        /* ====== 手机端适配 (屏幕宽度小于768px时生效) ====== */
+        @media (max-width: 768px) {
+            .my-logo { 
+                width: 80% !important; /* 手机端缩小开场动画 */
+            }
+            
+            img {
+                max-width: 100px !important; /* 防止头像在手机上过大 */
+                height: auto !important;
+            }
+
+            /* 调整中间文字区的内边距 */
+            .content-box {
+                padding: 20px 15px !important; 
+            }
+
+            /* 调整底部区域的内边距 */
+            .footer-box {
+                padding: 40px 20px !important; 
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- ====== 全屏开场动画 ====== -->
+    <!-- 全屏开场动画 -->
     <div id="loading-screen">
         <div class="my-logo">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.88 76.56">
@@ -57,12 +84,13 @@
         </div>
     </div>
 
-    <!-- ====== 原版网页内容 ====== -->
-    <div style="background-color:#FFC0CB; text-align:center; padding:80px">
-        <img src="Nikki.png" alt="苏暖暖" width="120px" height="100px">
+    <!-- 粉色头部 -->
+    <div style="background-color:#FFC0CB; text-align:center; padding:60px 20px;">
+        <img src="Nikki.png" alt="苏暖暖" width="120" height="100">
     </div>
 
-    <div style="max-width:700px; text-align:center; background-color:#FDF5E6; margin:30px auto; padding:15px; line-height:1.7; color:#66CDAA">
+    <!-- 灰色内容区（加了 class="content-box" 方便手机端调整） -->
+    <div class="content-box" style="max-width:700px; text-align:center; background-color:#FDF5E6; margin:30px auto; padding:15px; line-height:1.7; color:#66CDAA; border-radius: 10px;">
        <p>出场动画参考了</p>
        <a href="https://dark.netflix.io/en/family-tree">德剧：《暗黑》</a>
        <p>反正我觉得挺好看的</p>
@@ -72,14 +100,15 @@
        <p>人物多到我对着关系树都没看明白</p>
     </div>
 
-    <div style="background-color:#FFC0CB; text-align:center; padding:80px; font-size:12px">
+    <!-- 底部（加了 class="footer-box"） -->
+    <div class="footer-box" style="background-color:#FFC0CB; text-align:center; padding:60px 20px; font-size:14px;">
         <p>个人练习作品</p>
-        <a href="https://www.runoob.com/html/html-tutorial.html">学习链接</a>
-        <br><br>
-        <a href="可乐鸡翅.pdf">略拼小力的大作业</a>
+        <a href="https://www.runoob.com/html/html-tutorial.html" style="color: #333; text-decoration: none;">学习链接</a>
+      <br><br>
+        <a href="可乐鸡翅.pdf" style="color: #333; text-decoration: none;">略拼小力的大作业</a>
     </div>
 
-    <!-- ====== 音乐与交互 ====== -->
+    <!-- 音乐 -->
     <audio id="bg-music" loop autoplay muted>
         <source src="Lion.wav" type="audio/wav">
     </audio>
@@ -93,9 +122,8 @@
         var btn = document.getElementById('music-btn');
         var hasInteracted = false;
 
-        // 单独控制按钮点击（加了 event.stopPropagation 防止冲突）
         function toggleMusic(event) {
-            event.stopPropagation(); // 阻止事件冒泡到整个网页
+            event.stopPropagation();
             if (audio.paused) {
                 audio.muted = false;
                 audio.play();
@@ -107,7 +135,6 @@
             hasInteracted = true;
         }
 
-        // 网页任何地方点击，都会解除静音并播放
         document.addEventListener('click', function() {
             if (!hasInteracted) {
                 audio.muted = false; 
@@ -117,12 +144,10 @@
             }
         });
 
-        // 1. 等到 3 秒（3000毫秒）时，动画播完，让按钮出现
         setTimeout(function() {
             btn.style.display = 'block';
         }, 3000); 
 
-        // 2. 等到 4.5 秒（4500毫秒）时，把黑色的全屏遮罩彻底从网页删掉
         setTimeout(function() {
             document.getElementById('loading-screen').classList.add('hidden');
         }, 4500);
